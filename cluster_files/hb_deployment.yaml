@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hb0-deployment
+  labels:
+    app: hb0-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hb0
+  template:
+    metadata:
+      labels:
+        app: hb0
+    spec:
+      containers:
+      - name: hb0-pod1
+        image: hasanpacali/hepsiburada:hepsiburada_image_02222021_1848
+        ports:
+        - containerPort: 11130
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hb0-node-port
+  labels:
+    app: hb0-node-port
+spec:
+  type: NodePort
+  ports:
+  - port: 11130
+    protocol: TCP
+  selector:
+    app: hb0
